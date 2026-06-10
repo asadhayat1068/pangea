@@ -1,0 +1,17 @@
+# Binaries
+/bin/
+marketplace
+*.exe
+
+# Go build/test artifacts
+*.test
+*.out
+
+# Env & local
+.env
+*.local
+
+# Editor
+.idea/
+.vscode/
+.DS_Store
