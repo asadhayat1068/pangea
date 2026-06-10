@@ -1,6 +1,6 @@
 # ADR-002 — tenant_id everywhere
 
-Status: Accepted (CTO approved, Day 1)
+Status: Accepted (approved, 05/11/2026)
 
 ## Context
 Pangea is a multi-tenant SaaS platform. Even with a single tenant today, retro-
