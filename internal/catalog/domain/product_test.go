@@ -3,6 +3,7 @@ package domain
 import (
 	"errors"
 	"testing"
+	"time"
 )
 
 func TestNewProduct_Valid(t *testing.T) {
@@ -55,5 +56,27 @@ func TestNewProduct_Invalid(t *testing.T) {
 			}
 
 		})
+	}
+}
+
+func TestReconstitute(t *testing.T) {
+	ts := time.Date(2026, 1, 2, 3, 4, 5, 0, time.UTC)
+
+	product := Reconstitute("id-1", "tenant-1", "Milk", 250, "USD", "Dairy", true, ts, ts)
+
+	if product.ID != "id-1" {
+		t.Errorf("ID not set, got %q", product.ID)
+	}
+
+	if !product.InStock {
+		t.Errorf("expected in_stock true to be preserved")
+	}
+
+	if !product.CreatedAt.Equal(ts) {
+		t.Errorf("create_at not preserved")
+	}
+
+	if !product.UpdatedAt.Equal(ts) {
+		t.Errorf("updated_at not preserved")
 	}
 }

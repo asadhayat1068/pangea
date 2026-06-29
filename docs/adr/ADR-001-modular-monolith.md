@@ -1,6 +1,6 @@
 # ADR-001 — Modular monolith over microservices for the MVP
 
-Status: Accepted (CTO approved, Day 1)
+Status: Accepted (approved, 05/11/2026)
 
 ## Context
 Tiny team, unknown domain boundaries, need to ship a vertical slice fast and learn.
