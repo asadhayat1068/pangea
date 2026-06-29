@@ -78,3 +78,17 @@ func NewProduct(tenantID, name string, priceCents int64, currency, category stri
 		CreatedAt:  now,
 	}, nil
 }
+
+func Reconstitute(id, tenantID, name string, priceCents int64, currency, category string, inStock bool, createdAt, updatedAt time.Time) *Product {
+	return &Product{
+		ID:         id,
+		TenantID:   tenantID,
+		Name:       name,
+		PriceCents: priceCents,
+		Currency:   currency,
+		Category:   category,
+		InStock:    inStock,
+		CreatedAt:  createdAt,
+		UpdatedAt:  updatedAt,
+	}
+}

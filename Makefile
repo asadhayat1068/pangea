@@ -1,5 +1,7 @@
 .PHONY: up down run test vet build logs db-shell
 
+DB_URL := postgres://pangea:pangea@localhost:5432/pangea?sslmode=disable
+
 up:        ## Start PostgreSQL and wait until it is healthy
 	docker compose up -d
 	@echo "Waiting for Postgres to be healthy..."
@@ -27,3 +29,16 @@ logs:      ## Tail Postgres logs
 
 db-shell:  ## Open a psql shell
 	docker exec -it pangea-postgres psql -U pangea -d pangea
+
+migrate-up:     ## Apply all up migrations
+	migrate -path migrations -database "$(DB_URL)" up
+
+migrate-down:   ## Roll back the last migration
+	migrate -path migrations -database "$(DB_URL)" down 1
+
+migrate-drop:   ## Roll back the last migration
+	migrate -path migrations -database "$(DB_URL)" drop
+
+migrate-create: ## Create a new migration: make migrate-create name=add_xyz
+	migrate create -ext sql -dir migrations -seq $(name)
+

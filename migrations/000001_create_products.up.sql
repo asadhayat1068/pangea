@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS products (
     category    TEXT    NOT NULL    CHECK(char_length(category) >= 1),
     in_stock    BOOLEAN NOT NULL    DEFAULT FALSE,
     created_at  TIMESTAMPTZ  NOT NULL    DEFAULT now(),
-    updated_at  TIMESTAMPTZ  NOT NULL    DEFAULT now(),
+    updated_at  TIMESTAMPTZ  NOT NULL    DEFAULT now()
 );
 
 

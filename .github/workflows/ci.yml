@@ -24,3 +24,31 @@ jobs:
 
       - name: Build
         run: go build ./...
+  
+  migrations:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: pangea
+          POSTGRES_PASSWORD: pangea
+          POSTGRES_DB: pangea
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U pangea -d pangea"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 10
+          --health-start-period 30s
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install golang-migrate
+        run: |
+          curl -L https://github.com/golang-migrate/migrate/releases/download/v4.17.1/migrate.linux-amd64.tar.gz | tar xvz
+          sudo mv migrate /usr/local/bin/migrate
+      - name: Migrate up
+        run: migrate -path migrations -database "postgres://pangea:pangea@localhost:5432/pangea?sslmode=disable" up
+      - name: Migrate down (verify reversibility)
+        run: migrate -path migrations -database "postgres://pangea:pangea@localhost:5432/pangea?sslmode=disable" down -all
